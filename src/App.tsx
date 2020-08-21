@@ -4,7 +4,7 @@ import { Route, Router, Switch } from "react-router"
 import { createBrowserHistory } from "history"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
-import Shops from "./components/Shops"
+import Stores from "./components/Stores"
 
 const history = createBrowserHistory()
 
@@ -15,10 +15,10 @@ const App = () => {
       <Router history={history}>
         <Switch>
           <Route path="/shops">
-            <Shops />
+            <Stores />
           </Route>
           <Route path="/create">
-    
+
           </Route>
           <Route path="/lists">
             <Lists />
