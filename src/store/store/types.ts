@@ -4,35 +4,9 @@ export interface Store {
   city: string;
 }
 
-interface SetStoresAction {
+interface UpdateStoresAction {
   type: string;
-  payload: never
+  payload: Store[]
 }
 
-export type StoreAction = SetStoresAction
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  pricePerUnit: number | null;
-  unit: string | null;
-  imgSrc: string;
-  storeID: number;
-  link: string;
-}
-
-export interface ShoppingListResult {
-  [key: string]: number | Product[];
-}
-
-export interface ProductSearch {
-  desc: string[];
-  amount?: number;
-  unit?: string;
-}
-
-export interface SLSearch {
-  storeID: number;
-  productSearches: Array<ProductSearch>;
-}
+export type StoreAction = UpdateStoresAction

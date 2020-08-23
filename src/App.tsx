@@ -5,6 +5,7 @@ import { createBrowserHistory } from "history"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
 import Stores from "./components/Stores"
+import ProductSearchForm from "./components/ProductSearchForm"
 
 const history = createBrowserHistory()
 
@@ -14,11 +15,8 @@ const App = () => {
       <Menu />
       <Router history={history}>
         <Switch>
-          <Route path="/shops">
-            <Stores />
-          </Route>
-          <Route path="/create">
-
+          <Route path="/search">
+            <ProductSearchForm />
           </Route>
           <Route path="/lists">
             <Lists />
