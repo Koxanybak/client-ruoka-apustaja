@@ -17,7 +17,9 @@ export const productReducer = (state: ProductState = initialState, action: Produ
 
 export const getSearchResult = (searchBody: SLSearch) => {
   return async (dispatch: Dispatch) => {
+    console.log(searchBody)
     const searchResult = await getProductSearch(searchBody)
+    console.log(searchResult)
     dispatch({
       type: "GET_SEARCH_RESULT",
       payload: searchResult,
