@@ -5,7 +5,7 @@ import { createBrowserHistory } from "history"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
 import Stores from "./components/Stores"
-import ProductSearchForm from "./components/ProductSearchForm"
+import ProductSearchForm from "./components/product-search-form/ProductSearchForm"
 
 const history = createBrowserHistory()
 

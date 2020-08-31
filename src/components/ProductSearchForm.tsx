@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { Form, Card, Button } from "react-bootstrap"
-import { ProductSearch } from "../store/products/types"
+import { ProductSearch } from "../../store/products/types"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../store"
-import { getSearchResult } from "../store/products/productReducer"
+import { RootState } from "../../store"
+import { getSearchResult } from "../../store/products/productReducer"
 
 const ProductSearchForm = () => {
   const [productSearchObjs, setProductSearchObjs] = useState<ProductSearch[]>([{
@@ -15,12 +15,16 @@ const ProductSearchForm = () => {
   const currentStore = useSelector((state: RootState) => state.system.currentStore)
   const dispatch = useDispatch()
 
-  const ProductSearchCard: React.FC<{ productSearch: ProductSearch; index: number; }> = ({ productSearch, index }) => {
+  interface CardProps {
+    productSearch?: ProductSearch;
+    index: number;
+    updateDesc: (newDesc: string, index: number) => void;
+  }
+  const ProductSearchCard: React.FC<CardProps> = React.memo(({ index, updateDesc }) => {
     const changeProductSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newList = productSearchObjs.slice(0, productSearchObjs.length)
-      newList[index] = { ...newList[index], desc: event.target.value }
-      setProductSearchObjs(newList)
+      updateDesc(event.target.value, index)
     }
+    console.log("ProductSearchCrad rendered")
 
     return (
       <Card>
@@ -32,12 +36,18 @@ const ProductSearchForm = () => {
         </Card.Body>
       </Card>
     )
-  }
+  })
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(getSearchResult({ storeID: currentStore ? currentStore.id : 0, productSearches: productSearchObjs, }))
   }
+
+  const updateDesc = React.useCallback((newDesc: string, index: number) => {
+    const newList = productSearchObjs.slice(0, productSearchObjs.length)
+    newList[index] = { ...newList[index], desc: newDesc }
+    setProductSearchObjs(newList)
+  }, [])
 
   const addNewProductSearch = () => {
     setProductSearchObjs(productSearchObjs.concat({ desc: "" }))
@@ -48,7 +58,7 @@ const ProductSearchForm = () => {
       {
         productSearchObjs.map((pso, i) => {
           return (
-            <ProductSearchCard key={i} productSearch={pso} index={i} />
+            <ProductSearchCard key={i} index={i} updateDesc={updateDesc} />
           )
         })
       }
