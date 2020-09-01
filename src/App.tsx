@@ -1,15 +1,14 @@
 import React from "react"
 import Menu from "./components/Menu"
-import { Route, Router, Switch } from "react-router"
-import { createBrowserHistory } from "history"
+import { Route, Router, Switch, useHistory } from "react-router"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
 import SearchView from "./components/SearchView"
 import "./index.css"
 
-const history = createBrowserHistory()
-
 const App = () => {
+  const history = useHistory()
+
   return (
     <div id="app">
       <Menu />
