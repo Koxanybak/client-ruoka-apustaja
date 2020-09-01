@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, } from "react"
 import { Navbar, Nav, Button } from "react-bootstrap"
 import CurrentStore from "./CurrentStore"
 import Stores from "./Stores"

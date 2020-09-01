@@ -1,16 +1,23 @@
 import {
-  Store,
   StoreAction,
+  StoreState,
 } from "./types"
-import { getStores } from "../../services/stores"
+import { getStores, getStoreById } from "../../services/stores"
 import { Dispatch } from "react";
 
-export const storeReducer = (stores: Store[] = [], action: StoreAction): Store[] => {
+const initialState: StoreState = {
+  currentStore: null,
+  all: []
+}
+
+export const storeReducer = (state: StoreState = initialState, action: StoreAction): StoreState => {
   switch (action.type) {
     case "GET_ALL_STORES":
-      return action.payload
+      return { ...state, all: action.payload }
+    case "SET_CURRENT_STORE":
+      return { ...state, currentStore: action.payload }
     default:
-      return stores
+      return state
   }
 }
 
@@ -20,6 +27,16 @@ export const getAllStores = () => {
     dispatch({
       type: "GET_ALL_STORES",
       payload: stores,
+    })
+  }
+}
+
+export const getDefaultStore = () => {
+  return async (dispatch: Dispatch<StoreAction>) => {
+    const store = await getStoreById(705)
+    dispatch({
+      type: "SET_CURRENT_STORE",
+      payload: store,
     })
   }
 }

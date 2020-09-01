@@ -1,9 +1,17 @@
-import React from "react"
-import { useSelector } from "react-redux"
+import React, { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import { RootState } from "../store"
+import { getDefaultStore } from "../store/store/storeReducer"
 
 const CurrentStore = () => {
-  const currentStore = useSelector((state: RootState) => state.system.currentStore)
+  const currentStore = useSelector((state: RootState) => state.stores.currentStore)
+  const dispatch = useDispatch()
+
+  // initializes the store
+  useEffect(() => {
+    console.log("Switching to default store")
+    dispatch(getDefaultStore())
+  }, [dispatch])
 
   return (
     <h5>

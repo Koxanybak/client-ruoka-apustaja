@@ -6,7 +6,7 @@ import { Row, Container, Modal, Nav } from "react-bootstrap";
 import { setCurrentStore } from "../store/system/systemReducer";
 
 const StoreContainer = () => {
-  const stores = useSelector((state: RootState) => state.stores)
+  const stores = useSelector((state: RootState) => state.stores.all)
   const dispatch = useDispatch()
 
   useEffect(() => {
