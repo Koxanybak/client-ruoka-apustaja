@@ -5,6 +5,7 @@ import { createBrowserHistory } from "history"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
 import SearchView from "./components/SearchView"
+import "./index.css"
 
 const history = createBrowserHistory()
 
