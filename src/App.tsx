@@ -4,8 +4,7 @@ import { Route, Router, Switch } from "react-router"
 import { createBrowserHistory } from "history"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
-import Stores from "./components/Stores"
-import ProductSearchForm from "./components/product-search-form/ProductSearchForm"
+import SearchView from "./components/SearchView"
 
 const history = createBrowserHistory()
 
@@ -16,7 +15,7 @@ const App = () => {
       <Router history={history}>
         <Switch>
           <Route path="/search">
-            <ProductSearchForm />
+            <SearchView />
           </Route>
           <Route path="/lists">
             <Lists />

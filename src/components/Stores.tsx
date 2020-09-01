@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { getAllStores } from "../store/store/storeReducer"
 import { RootState } from "../store";
-import { Row, Card, Container, Modal, Nav } from "react-bootstrap";
+import { Row, Container, Modal, Nav } from "react-bootstrap";
 import { setCurrentStore } from "../store/system/systemReducer";
 
 const StoreContainer = () => {
@@ -22,12 +22,6 @@ const StoreContainer = () => {
               <Nav.Link onClick={() => dispatch(setCurrentStore(store))}>
                 {`${store.name}, ${store.city}`}
               </Nav.Link>
-              {/* <Card>
-                <Card.Body>
-                  <Card.Title>{store.name}</Card.Title>
-                  <Card.Subtitle>{store.city}</Card.Subtitle>
-                </Card.Body>
-              </Card> */}
             </Row>
           )
         })

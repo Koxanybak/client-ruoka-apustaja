@@ -26,6 +26,7 @@ export interface Product {
 
 export interface ProductSearch {
   desc: string;
+  id?: number;
   amount?: number;
   unit?: string;
 }
