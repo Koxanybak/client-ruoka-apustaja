@@ -1,18 +1,15 @@
 import React from "react"
 import Menu from "./components/Menu"
-import { Route, Router, Switch, useHistory } from "react-router"
+import { Route, BrowserRouter as Router, Switch, } from "react-router-dom"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
 import SearchView from "./components/SearchView"
-import "./index.css"
 
 const App = () => {
-  const history = useHistory()
-
   return (
     <div id="app">
       <Menu />
-      <Router history={history}>
+      <Router>
         <Switch>
           <Route path="/search">
             <SearchView />
