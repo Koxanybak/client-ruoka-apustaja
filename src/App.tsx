@@ -3,7 +3,7 @@ import Menu from "./components/Menu"
 import { Route, BrowserRouter as Router, Switch, } from "react-router-dom"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
-import SearchView from "./components/SearchView"
+import SearchView from "./components/search-view"
 
 const App = () => {
   return (

@@ -1,5 +1,5 @@
 import React from "react"
-import { ProductSearchResult } from "../store/products/types"
+import { ProductSearchResult } from "../../store/products/types"
 import { createUseStyles } from "react-jss"
 
 const useStyles = createUseStyles({
@@ -9,14 +9,15 @@ const useStyles = createUseStyles({
   },
   searchResultItem: {
     borderStyle: "solid",
-    borderWidth: "2px",
+    borderWidth: "0.5em",
     borderColor: "#e8ba23",
-    borderRadius: "5px",
+    borderRadius: "20px",
     padding: "0.5em",
     margin: "1em",
     display: "flex",
     flexDirection: "column",
     flexWrap: "no-wrap",
+    background: "#fff7e3",
   },
   searchResultProduct: {
     display: "flex",
@@ -26,6 +27,8 @@ const useStyles = createUseStyles({
     padding: "0.5em",
     width: "15%",
     height: "20em",
+    border: "1px solid orange",
+    borderRadius: "5px",
   },
   priceContainer: {
     display: "flex",
@@ -51,7 +54,7 @@ const SearchResult: React.FC<{ searchResult: ProductSearchResult }> = ({ searchR
         {Object.keys(searchResult).map((desc, i) => (
           <li key={i} className={classes.searchResultItem}>
             <h4 className={classes.searchDesc}>
-              {desc}
+              &quot;{desc}&quot;
             </h4>
             <div className={classes.productContainer}>
               {searchResult[desc].map(product => (

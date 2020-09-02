@@ -1,9 +1,10 @@
 import React, { useState } from "react"
-import { Form, Card, Button } from "react-bootstrap"
-import { ProductSearch } from "../store/products/types"
+import { Form, Card } from "react-bootstrap"
+import { ProductSearch } from "../../store/products/types"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../store"
-import { getSearchResult } from "../store/products/productReducer"
+import { RootState } from "../../store"
+import { getSearchResult } from "../../store/products/productReducer"
+import Button from "../Button";
 
 
 const ProductSearchForm = () => {
@@ -57,8 +58,8 @@ const ProductSearchForm = () => {
           )
         })
       }
-      <Button onClick={addNewProductSearch}>Lisää tuote</Button>
-      <Button type="submit">Hae ostoslistaa</Button>
+      <Button primary onClick={addNewProductSearch}>Lisää tuote</Button>
+      <Button primary type="submit">Hae ostoslistaa</Button>
     </Form>
   )
 }
