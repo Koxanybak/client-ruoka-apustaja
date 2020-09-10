@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { RootState } from "../store"
-import { getDefaultStore } from "../store/store/storeReducer"
+import { getDefaultStore } from "../store/stores/storeReducer"
 
 const CurrentStore = () => {
   const currentStore = useSelector((state: RootState) => state.stores.currentStore)

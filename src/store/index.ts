@@ -1,4 +1,4 @@
-import { storeReducer } from "./store/storeReducer";
+import { storeReducer } from "./stores/storeReducer";
 import { systemReducer } from "./system/systemReducer";
 import { combineReducers } from "redux";
 import { productReducer } from "./products/productReducer";

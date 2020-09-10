@@ -6,6 +6,7 @@ import { useLocation } from "react-router"
 import { useDispatch, useSelector } from "react-redux"
 import { getSearchResult } from "../store/products/productReducer"
 import { RootState } from "../store"
+import Lists from "./Lists"
 
 const useStyles = createUseStyles({
   searchResultList: {
@@ -90,6 +91,7 @@ const SearchResult= () => {
           </li>
         ))}
       </ul>
+      <Lists show />
     </div>
   )
 }

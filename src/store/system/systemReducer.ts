@@ -1,5 +1,5 @@
 import { SystemState, SystemAction } from "./types";
-import { Store } from "../store/types";
+import { Store } from "../stores/types";
 
 const initialSystemState: SystemState = {
   currentStore: null,

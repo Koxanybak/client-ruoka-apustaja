@@ -1,4 +1,4 @@
-import { Store } from "../store/types"
+import { Store } from "../stores/types"
 
 export interface SystemState {
   currentStore: Store | null;

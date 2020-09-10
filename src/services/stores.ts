@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Store } from "../store/store/types"
+import { Store } from "../store/stores/types"
 
 const baseUrl = "http://localhost:3001/api/stores"
 

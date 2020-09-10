@@ -1,0 +1,13 @@
+.search-result-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.search-result-desc {
+  border-style: solid;
+}
+
+.search-result-product {
+  border-style: solid;
+}
