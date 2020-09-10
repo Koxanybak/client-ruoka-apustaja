@@ -3,6 +3,6 @@ import { ProductSearchResult, SLSearch, } from "../store/products/types"
 
 const baseUrl = "http://localhost:3001/api/products"
 
-export const getProductSearch = async (searchBody: SLSearch): Promise<ProductSearchResult> => {
-  return (await axios.get(`${baseUrl}/search`, { params: searchBody })).data
+export const getProductSearch = (searchBody: SLSearch): Promise<ProductSearchResult> => {
+  return axios.get(`${baseUrl}/search`, { params: searchBody }).then(res => res.data)
 }

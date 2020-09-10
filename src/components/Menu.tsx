@@ -12,7 +12,7 @@ const Menu = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav>
-          <Nav.Link href="/search">Hae ostoslistaa</Nav.Link>
+          <Nav.Link href="/new">Hae ostoslistaa</Nav.Link>
           <Nav.Link href="/lists">Ostoslistani</Nav.Link>
           <Button variant="primary" onClick={() => setModalShow(true)}>
             Vaihda kauppaa

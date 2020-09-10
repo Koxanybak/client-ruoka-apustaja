@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import { Form, Card } from "react-bootstrap"
-import { ProductSearch } from "../../store/products/types"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../store"
-import { getSearchResult } from "../../store/products/productReducer"
-import Button from "../Button";
+import { ProductSearch } from "../store/products/types"
+import { useSelector } from "react-redux"
+import { RootState } from "../store"
+import Button from "./Button";
+import qs from "qs"
+import { useHistory } from "react-router"
 
 
 const ProductSearchForm = () => {
@@ -12,24 +13,28 @@ const ProductSearchForm = () => {
     desc: "",
     id: 0,
   }])
+  const history = useHistory()
 
   // TODO: VALIDATE THE FORM, CURRENTSTORE CANNOT BE NULL
 
   const currentStore = useSelector((state: RootState) => state.system.currentStore)
-  const dispatch = useDispatch()
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(getSearchResult({
+    history.push(`/search${qs.stringify(
+    {
       storeID: currentStore ? currentStore.id : 0,
       productSearches: productSearchObjs.map(pso => ({ desc: pso.desc })),
-    }))
+    },
+    {
+      addQueryPrefix: true,
+    })}`)
   }
 
   const addNewProductSearch = () => {
     setProductSearchObjs(productSearchObjs.concat({
       desc: "",
-      id: Math.max(...productSearchObjs.map(pso => pso.id ? pso.id : 0)) + 1
+      id: Math.max(...productSearchObjs.map(pso => pso.id ? pso.id : 0)) + 1,
     }))
   }
 
@@ -58,7 +63,7 @@ const ProductSearchForm = () => {
           )
         })
       }
-      <Button primary onClick={addNewProductSearch}>Lisää tuote</Button>
+      <Button primary type="button" onClick={addNewProductSearch}>Lisää tuote</Button>
       <Button primary type="submit">Hae ostoslistaa</Button>
     </Form>
   )

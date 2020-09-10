@@ -1,6 +1,11 @@
-import React from "react"
-import { ProductSearchResult } from "../../store/products/types"
+import React, { useEffect, useMemo } from "react"
+import { SLSearch } from "../store/products/types"
 import { createUseStyles } from "react-jss"
+import qs from "qs"
+import { useLocation } from "react-router"
+import { useDispatch, useSelector } from "react-redux"
+import { getSearchResult } from "../store/products/productReducer"
+import { RootState } from "../store"
 
 const useStyles = createUseStyles({
   searchResultList: {
@@ -45,19 +50,32 @@ const useStyles = createUseStyles({
   }
 })
 
-const SearchResult: React.FC<{ searchResult: ProductSearchResult }> = ({ searchResult }) => {
+const SearchResult= () => {
   const classes = useStyles()
+  const location = useLocation()
+  const search_result = useSelector((state: RootState) => state.products.searchResult)
+  const search_obj = useMemo(() => qs.parse(location.search, { ignoreQueryPrefix: true }) as any as SLSearch, [location.search])
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getSearchResult(search_obj))
+  }, [dispatch, search_obj])
+
+  if (!search_result) {
+    return null
+  }
+  console.log(search_result)
 
   return (
     <div className="search-results">
       <ul className={classes.searchResultList}>
-        {Object.keys(searchResult).map((desc, i) => (
+        {Object.keys(search_result).map((desc, i) => (
           <li key={i} className={classes.searchResultItem}>
             <h4 className={classes.searchDesc}>
               &quot;{desc}&quot;
             </h4>
             <div className={classes.productContainer}>
-              {searchResult[desc].map(product => (
+              {search_result[desc].map(product => (
                 <div key={product.id} className={classes.searchResultProduct}>
                   <div>
                     <img src={product.imgSrc} alt="product" className="product-image" />

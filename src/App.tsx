@@ -3,7 +3,8 @@ import Menu from "./components/Menu"
 import { Route, BrowserRouter as Router, Switch, } from "react-router-dom"
 import Home from "./components/Home"
 import Lists from "./components/Lists"
-import SearchView from "./components/search-view"
+import SearchResults from "./components/SearchResults"
+import ProductSearchForm from "./components/ProductSearchForm"
 
 const App = () => {
   return (
@@ -12,9 +13,12 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/search">
-            <SearchView />
+            <SearchResults />
           </Route>
-          <Route path="/lists">
+          <Route path="/new">
+            <ProductSearchForm />
+          </Route>
+          <Route path="/shoppinglists">
             <Lists />
           </Route>
           <Route path="/">
