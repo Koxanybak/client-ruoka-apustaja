@@ -6,9 +6,17 @@ export interface User {
   token: string;
 }
 
+
+export type FeedbackVariant = "warning" | "danger" | "success"
+interface Feedback {
+  message: string;
+  variant: FeedbackVariant;
+}
+
 export interface SystemState {
   currentStore: Store | null;
   logged_user: User | null;
+  feedback: Feedback | null;
 }
 
 interface SetStoreAction {
@@ -16,9 +24,18 @@ interface SetStoreAction {
   payload: Store;
 }
 
+interface SetFeedbackAction {
+  type: "SET_FEEDBACK";
+  payload: Feedback;
+}
+
+interface ClearFeedbackAction {
+  type: "CLEAR_FEEDBACK";
+}
+
 interface SetLoggedUserAction {
   type: "SET_LOGGED_USER";
   payload: User;
 }
 
-export type SystemAction = SetStoreAction | SetLoggedUserAction
+export type SystemAction = SetStoreAction | SetLoggedUserAction | SetFeedbackAction | ClearFeedbackAction
