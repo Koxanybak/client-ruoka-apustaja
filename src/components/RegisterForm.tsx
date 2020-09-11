@@ -1,7 +1,9 @@
 import { Formik, Field, Form as FForm } from "formik"
 import React from "react"
 import { Button, Form } from "react-bootstrap"
+import { useHistory } from "react-router"
 import * as yup from "yup"
+import { createUser } from "../services/users"
 
 interface LoginValues {
   username: string;
@@ -14,6 +16,7 @@ const schema = yup.object().shape({
 })
 
 const RegisterForm = () => {
+  const history = useHistory()
   const initial_values: LoginValues = { username: "", password: "" }
 
   return (
@@ -22,39 +25,56 @@ const RegisterForm = () => {
       <Formik
         initialValues={initial_values}
         onSubmit={async (values) => {
-          
+          createUser(values)
+            .then(() => {
+              history.push("/")
+            })
+            .catch(err => {
+              console.log({...err})
+            })
         }}
         validationSchema={schema}
         validateOnChange
       >
-        {({ isSubmitting, errors, touched, values }) => (
+        {(
+          {
+            isSubmitting,
+            errors,
+            touched,
+            values, 
+            handleChange,
+          }
+        ) => (
           <FForm>
-            <Form.Label>Käyttäjänimi</Form.Label>
-            <Field
-              name="username"
-              placeholder="Käyttäjänimi"
-              as={Form.Control}
-            />
-            {errors.username && touched.username ? (
-              <Form.Control.Feedback>
-                Käyttäjänimen pitään olla 4-20 merkkiä.
+            <Form.Group>
+              <Form.Label>Käyttäjänimi</Form.Label>
+              <Form.Control
+                onChange={handleChange}
+                placeholder="Käyttäjänimi"
+                name="username"
+                isInvalid={!!errors.username && !!touched.username}
+              />
+              <Form.Control.Feedback type="invalid">
+                Käyttäjänimen pitää olla 4-20 merkkiä.
               </Form.Control.Feedback>
-            ) : null}
-            <Form.Label>Salasana</Form.Label>
-            <Field
-              name="password"
-              placeholder="Salasana"
-              type="password"
-              as={Form.Control}
-            />
-            {errors.password && touched.password ? (
-              <Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Salasana</Form.Label>
+              <Form.Control
+                onChange={handleChange}
+                placeholder="Salasana"
+                type="password"
+                name="password"
+                isInvalid={!!errors.password && !!touched.password}
+              />
+              <Form.Control.Feedback type="invalid">
                 Salasanan pitää olla 9-50 merkkiä.
               </Form.Control.Feedback>
-            ) : null}
+            </Form.Group>
+
             <Button variant="primary" type="submit" disabled={isSubmitting}>Luo käyttäjä</Button>
             {JSON.stringify(values, null, 2)}
-            {console.log(errors, touched)}
           </FForm>
         )}
       </Formik>
