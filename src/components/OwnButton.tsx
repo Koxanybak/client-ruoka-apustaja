@@ -24,7 +24,7 @@ const useStyles = createUseStyles({
   }
 })
 
-const Button: React.FC<{ primary?: boolean } & React.ComponentPropsWithoutRef<"button">> = ({ children, primary=false, ...props }) => {
+const OwnButton: React.FC<{ primary?: boolean } & React.ComponentPropsWithoutRef<"button">> = ({ children, primary=false, ...props }) => {
   const classes = useStyles()
   const defaultClass = primary ? classes.primaryButton : classes.secondaryButton
   const [className, setClassName] = useState(defaultClass)
@@ -41,4 +41,4 @@ const Button: React.FC<{ primary?: boolean } & React.ComponentPropsWithoutRef<"b
   )
 }
 
-export default Button
+export default OwnButton

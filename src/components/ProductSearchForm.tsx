@@ -3,7 +3,7 @@ import { Form, Card } from "react-bootstrap"
 import { ProductSearch } from "../store/products/types"
 import { useSelector } from "react-redux"
 import { RootState } from "../store"
-import Button from "./Button";
+import OwnButton from "./OwnButton";
 import qs from "qs"
 import { useHistory } from "react-router"
 
@@ -63,8 +63,8 @@ const ProductSearchForm = () => {
           )
         })
       }
-      <Button primary type="button" onClick={addNewProductSearch}>Lisää tuote</Button>
-      <Button primary type="submit">Hae ostoslistaa</Button>
+      <OwnButton primary type="button" onClick={addNewProductSearch}>Lisää tuote</OwnButton>
+      <OwnButton primary type="submit">Hae ostoslistaa</OwnButton>
     </Form>
   )
 }

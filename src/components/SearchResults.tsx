@@ -12,18 +12,14 @@ const useStyles = createUseStyles({
   searchResultList: {
     display: "flex",
     flexDirection: "column",
+    overflowY: "scroll",
   },
   searchResultItem: {
-    borderStyle: "solid",
-    borderWidth: "0.5em",
-    borderColor: "#e8ba23",
-    borderRadius: "20px",
     padding: "0.5em",
     margin: "1em",
     display: "flex",
     flexDirection: "column",
     flexWrap: "no-wrap",
-    background: "#fff7e3",
   },
   searchResultProduct: {
     display: "flex",
@@ -31,7 +27,7 @@ const useStyles = createUseStyles({
     backgroundColor: "#d2fcfa",
     margin: "0.5em",
     padding: "0.5em",
-    width: "15%",
+    width: "200px",
     height: "20em",
     border: "1px solid orange",
     borderRadius: "5px",
@@ -48,7 +44,7 @@ const useStyles = createUseStyles({
     flexWrap: "wrap",
     flexDirection: "row",
     alignItems: "stretch",
-  }
+  },
 })
 
 const SearchResult= () => {
@@ -72,7 +68,7 @@ const SearchResult= () => {
       <ul className={classes.searchResultList}>
         {Object.keys(search_result).map((desc, i) => (
           <li key={i} className={classes.searchResultItem}>
-            <h4 className={classes.searchDesc}>
+            <h4 /* className={classes.searchDesc} */>
               &quot;{desc}&quot;
             </h4>
             <div className={classes.productContainer}>
