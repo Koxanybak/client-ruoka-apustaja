@@ -4,6 +4,7 @@ import { Formik, Field, Form as FForm } from "formik"
 import { login } from "../services/users"
 import { useDispatch } from "react-redux"
 import { set_logged_user } from "../store/system/systemReducer"
+import { useHistory } from "react-router"
 
 interface LoginValues {
   username: string;
@@ -13,6 +14,7 @@ interface LoginValues {
 const LoginForm: React.FC<{ show: boolean, onHide: React.Dispatch<React.SetStateAction<void>> }> = ({ show, onHide }) => {
   const initial_values: LoginValues = { username: "", password: "" }
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const handleLogin = (values: LoginValues) => {
     login(values)
@@ -53,6 +55,8 @@ const LoginForm: React.FC<{ show: boolean, onHide: React.Dispatch<React.SetState
               />
               <Modal.Footer>
                 <Button variant="primary" type="submit" disabled={isSubmitting}>Kirjaudu</Button>
+                {/* <Button variant="link" onClick={() => history.push("/register")}>Tai rekisteröidy</Button> */}
+                <a href="/register">Tai rekisteröidy</a>
               </Modal.Footer>
             </FForm>
           )}

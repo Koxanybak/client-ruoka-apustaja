@@ -5,6 +5,7 @@ import Home from "./components/Home"
 import Lists from "./components/Lists"
 import SearchResults from "./components/SearchResults"
 import ProductSearchForm from "./components/ProductSearchForm"
+import RegisterForm from "./components/RegisterForm"
 
 const App = () => {
   return (
@@ -20,6 +21,9 @@ const App = () => {
           </Route>
           <Route path="/shoppinglists">
             <Lists show />
+          </Route>
+          <Route path="/register">
+            <RegisterForm />
           </Route>
           <Route path="/">
             <Home />
