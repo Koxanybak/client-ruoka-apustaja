@@ -3,8 +3,7 @@ import { Modal, Form, Button } from "react-bootstrap"
 import { Formik, Field, Form as FForm } from "formik"
 import { login } from "../services/users"
 import { useDispatch } from "react-redux"
-import { set_logged_user } from "../store/system/systemReducer"
-import { useHistory } from "react-router"
+import { set_feedback, set_logged_user } from "../store/system/systemReducer"
 
 interface LoginValues {
   username: string;
@@ -14,7 +13,6 @@ interface LoginValues {
 const LoginForm: React.FC<{ show: boolean, onHide: React.Dispatch<React.SetStateAction<void>> }> = ({ show, onHide }) => {
   const initial_values: LoginValues = { username: "", password: "" }
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const handleLogin = (values: LoginValues) => {
     login(values)
@@ -22,7 +20,8 @@ const LoginForm: React.FC<{ show: boolean, onHide: React.Dispatch<React.SetState
         dispatch(set_logged_user(data))
       })
       .catch(err => {
-        console.log(err)
+        console.log({...err})
+        dispatch(set_feedback(err.response?.data?.error, "danger"))
       })
   }
 

@@ -1,9 +1,11 @@
-import { Formik, Field, Form as FForm } from "formik"
+import { Formik, Form as FForm } from "formik"
 import React from "react"
 import { Button, Form } from "react-bootstrap"
+import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 import * as yup from "yup"
 import { createUser } from "../services/users"
+import { set_feedback } from "../store/system/systemReducer"
 
 interface LoginValues {
   username: string;
@@ -18,6 +20,7 @@ const schema = yup.object().shape({
 const RegisterForm = () => {
   const history = useHistory()
   const initial_values: LoginValues = { username: "", password: "" }
+  const dispatch = useDispatch()
 
   return (
     <div>
@@ -27,10 +30,12 @@ const RegisterForm = () => {
         onSubmit={async (values) => {
           createUser(values)
             .then(() => {
+              dispatch(set_feedback("Käyttäjä luotu onnistuneesti. Voit nyt kirjautua sisään.", "success"))
               history.push("/")
             })
             .catch(err => {
               console.log({...err})
+              dispatch(set_feedback(err.response?.data?.error, "danger"))
             })
         }}
         validationSchema={schema}

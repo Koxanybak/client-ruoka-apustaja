@@ -2,16 +2,24 @@ export interface ProductSearchResult {
   [key: string]: Product[];
 }
 
+type ProductError = { message: string };
+
 export interface ProductState {
   searchResult: ProductSearchResult | null;
+  error: ProductError | null;
 }
 
 interface GetSearchResultAction {
-  type: string;
-  payload: ProductSearchResult
+  type: "GET_SEARCH_RESULT";
+  payload: ProductSearchResult;
 }
 
-export type ProductAction = GetSearchResultAction
+interface SetErrorAction {
+  type: "SET_ERROR";
+  payload: ProductError | null;
+}
+
+export type ProductAction = GetSearchResultAction | SetErrorAction
 
 export interface Product {
   id: number;

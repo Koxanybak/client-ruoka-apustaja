@@ -6,6 +6,7 @@ import Lists from "./components/Lists"
 import SearchResults from "./components/SearchResults"
 import ProductSearchForm from "./components/ProductSearchForm"
 import RegisterForm from "./components/RegisterForm"
+import Notification from "./components/Notification"
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
+      <Notification />
     </div>
   )
 }

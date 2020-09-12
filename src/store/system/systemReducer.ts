@@ -1,7 +1,6 @@
 import { SystemState, SystemAction, User, FeedbackVariant } from "./types";
 import { Store } from "../stores/types";
-import { store } from "../index"
-import { clearTimeout } from "timers";
+import { Dispatch } from "react";
 
 const initialSystemState: SystemState = {
   currentStore: null,
@@ -18,7 +17,7 @@ export const systemReducer = (state: SystemState = initialSystemState, action: S
     case "SET_FEEDBACK":
       return { ...state, feedback: action.payload }
     case "CLEAR_FEEDBACK":
-      return { ... state, feedback: null }
+      return { ...state, feedback: null }
     default:
       return state
   }
@@ -26,22 +25,20 @@ export const systemReducer = (state: SystemState = initialSystemState, action: S
 
 let timeout_id: ReturnType<typeof setTimeout> | undefined = undefined
 
-const clear_feedback = () => {
-  store.dispatch({
-    type: "CLEAR_FEEDBACK",
-  })
-}
-
 export const set_feedback = (message: string, variant: FeedbackVariant, time_sec: number = 5) => {
-  if (timeout_id) clearTimeout(timeout_id)
+  return async (dispatch: Dispatch<SystemAction>) => {
+    if (timeout_id) clearTimeout(timeout_id)
 
-  timeout_id = setTimeout(() => {
-    clear_feedback()
-  }, 1000*time_sec)
+    timeout_id = setTimeout(() => {
+      dispatch({
+        type: "CLEAR_FEEDBACK",
+      })
+    }, 1000*time_sec)
 
-  return {
-    type: "SET_FEEDBACK",
-    payload: { message, variant, },
+    dispatch({
+      type: "SET_FEEDBACK",
+      payload: { message, variant, },
+    })
   }
 }
 

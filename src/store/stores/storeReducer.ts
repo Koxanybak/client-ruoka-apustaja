@@ -7,7 +7,11 @@ import { Dispatch } from "react";
 
 const initialState: StoreState = {
   currentStore: null,
-  all: []
+  all: [],
+  errors: {
+    all: false,
+    current: false,
+  },
 }
 
 export const storeReducer = (state: StoreState = initialState, action: StoreAction): StoreState => {
@@ -16,6 +20,8 @@ export const storeReducer = (state: StoreState = initialState, action: StoreActi
       return { ...state, all: action.payload }
     case "SET_CURRENT_STORE":
       return { ...state, currentStore: action.payload }
+    case "SET_ERROR":
+      return { ...state, errors: { ...state.errors, ...action.payload }}
     default:
       return state
   }
@@ -23,11 +29,23 @@ export const storeReducer = (state: StoreState = initialState, action: StoreActi
 
 export const getAllStores = () => {
   return async (dispatch: Dispatch<StoreAction>) => {
-    const stores = await getStores()
-    dispatch({
-      type: "GET_ALL_STORES",
-      payload: stores,
-    })
+    try {
+      const stores = await getStores()
+      dispatch({
+        type: "GET_ALL_STORES",
+        payload: stores,
+      })
+      dispatch({
+        type: "SET_ERROR",
+        payload: { all: false }
+      })
+    }
+    catch {
+      dispatch({
+        type: "SET_ERROR",
+        payload: { all: true }
+      })
+    }
   }
 }
 

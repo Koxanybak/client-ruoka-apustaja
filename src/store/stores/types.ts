@@ -4,6 +4,8 @@ export interface Store {
   city: string;
 }
 
+export type StoreErrors = "all" | "current"
+
 interface GetAllStoresAction {
   type: "GET_ALL_STORES";
   payload: Store[]
@@ -14,9 +16,15 @@ interface SetCurrentStoreAction {
   payload: Store;
 }
 
+interface SetErrorAction {
+  type: "SET_ERROR",
+  payload: { [key in StoreErrors]?: boolean; }
+}
+
 export interface StoreState {
   currentStore: Store | null;
   all: Store[];
+  errors: { [key in StoreErrors]: boolean; };
 }
 
-export type StoreAction = GetAllStoresAction | SetCurrentStoreAction
+export type StoreAction = GetAllStoresAction | SetCurrentStoreAction | SetErrorAction

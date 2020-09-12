@@ -3,13 +3,16 @@ import { Dispatch } from "redux";
 import { getProductSearch } from "../../services/products";
 
 const initialState: ProductState = {
-  searchResult: null
+  searchResult: null,
+  error: null,
 }
 
 export const productReducer = (state: ProductState = initialState, action: ProductAction): ProductState => {
   switch (action.type) {
     case "GET_SEARCH_RESULT":
       return { ...state, searchResult: action.payload }
+    case "SET_ERROR":
+      return { ...state, error: action.payload }
     default:
       return state
   }
@@ -17,10 +20,23 @@ export const productReducer = (state: ProductState = initialState, action: Produ
 
 export const getSearchResult = (searchBody: SLSearch) => {
   return async (dispatch: Dispatch) => {
-    const searchResult = await getProductSearch(searchBody)
-    dispatch({
-      type: "GET_SEARCH_RESULT",
-      payload: searchResult,
-    })
+    try {
+      const searchResult = await getProductSearch(searchBody)
+      dispatch({
+        type: "GET_SEARCH_RESULT",
+        payload: searchResult,
+      })
+      dispatch({
+        type: "SET_ERROR",
+        payload: null,
+      })
+    }
+    catch (err) {
+      console.log({...err})
+      dispatch({
+        type: "SET_ERROR",
+        payload: null,
+      })
+    }
   }
 }
