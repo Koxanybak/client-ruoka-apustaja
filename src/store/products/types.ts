@@ -2,7 +2,7 @@ export interface ProductSearchResult {
   [key: string]: Product[];
 }
 
-type ProductError = { message: string };
+type ProductError = { message: string; status: number; };
 
 export interface ProductState {
   searchResult: ProductSearchResult | null;

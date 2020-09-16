@@ -6,7 +6,8 @@ import { useLocation } from "react-router"
 import { useDispatch, useSelector } from "react-redux"
 import { getSearchResult } from "../store/products/productReducer"
 import { RootState } from "../store"
-import Lists from "./Lists"
+import ShoppingLists from "./ShoppingLists"
+import ErrorComponent from "./ErrorComponent"
 
 const useStyles = createUseStyles({
   searchResultList: {
@@ -51,6 +52,7 @@ const SearchResult= () => {
   const classes = useStyles()
   const location = useLocation()
   const search_result = useSelector((state: RootState) => state.products.searchResult)
+  const error = useSelector((state: RootState) => state.products.error)
   const search_obj = useMemo(() => qs.parse(location.search, { ignoreQueryPrefix: true }) as any as SLSearch, [location.search])
   const dispatch = useDispatch()
 
@@ -58,36 +60,40 @@ const SearchResult= () => {
     dispatch(getSearchResult(search_obj))
   }, [dispatch, search_obj])
 
-  if (!search_result) {
-    return null
-  }
-  console.log(search_result)
-
   return (
     <div className="search-results">
-      <ul className={classes.searchResultList}>
-        {Object.keys(search_result).map((desc, i) => (
-          <li key={i} className={classes.searchResultItem}>
-            <h4 /* className={classes.searchDesc} */>
-              &quot;{desc}&quot;
-            </h4>
-            <div className={classes.productContainer}>
-              {search_result[desc].map(product => (
-                <div key={product.id} className={classes.searchResultProduct}>
-                  <div>
-                    <img src={product.imgSrc} alt="product" className="product-image" />
-                  </div>
-                  <div className={classes.priceContainer}>
-                    <div className="product-price">{product.price}</div>
-                  </div>
-                  <div className="product-name">{product.name}</div>
+      {!error
+        ?
+          search_result ? <ul className={classes.searchResultList}>
+            {Object.keys(search_result).map((desc, i) => (
+              <li key={i} className={classes.searchResultItem}>
+                <h4 /* className={classes.searchDesc} */>
+                  &quot;{desc}&quot;
+                </h4>
+                <div className={classes.productContainer}>
+                  {search_result[desc].map(product => (
+                    <div key={product.id} className={classes.searchResultProduct}>
+                      <div>
+                        <img src={product.imgSrc} alt="product" className="product-image" />
+                      </div>
+                      <div className={classes.priceContainer}>
+                        <div className="product-price">{product.price}</div>
+                      </div>
+                      <div className="product-name">{product.name}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </li>
-        ))}
-      </ul>
-      <Lists show />
+              </li>
+            ))}
+          </ul> : null
+        :
+          <ErrorComponent
+            message={error.message}
+            status={error.status}
+            retry_func={() => dispatch(getSearchResult(search_obj))}
+          />
+      }
+      <ShoppingLists show />
     </div>
   )
 }

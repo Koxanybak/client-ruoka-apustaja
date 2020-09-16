@@ -35,7 +35,10 @@ export const getSearchResult = (searchBody: SLSearch) => {
       console.log({...err})
       dispatch({
         type: "SET_ERROR",
-        payload: null,
+        payload: {
+          message: err.response?.data?.error,
+          status: err.response?.status,
+        },
       })
     }
   }

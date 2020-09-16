@@ -2,7 +2,7 @@ import React from "react"
 import Menu from "./components/Menu"
 import { Route, BrowserRouter as Router, Switch, } from "react-router-dom"
 import Home from "./components/Home"
-import Lists from "./components/Lists"
+import ShoppingLists from "./components/ShoppingLists"
 import SearchResults from "./components/SearchResults"
 import ProductSearchForm from "./components/ProductSearchForm"
 import RegisterForm from "./components/RegisterForm"
@@ -21,7 +21,7 @@ const App = () => {
             <ProductSearchForm />
           </Route>
           <Route path="/shoppinglists">
-            <Lists show />
+            <ShoppingLists show />
           </Route>
           <Route path="/register">
             <RegisterForm />

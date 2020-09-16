@@ -19,7 +19,7 @@ const CurrentStore = () => {
     <h5>
       <strong>{currentStore ? currentStore.name : null}</strong>
     </h5>
-  ) : <ErrorComponent resource="Oletuskauppaa" retry_func={() => dispatch(getDefaultStore)} />
+  ) : <ErrorComponent message="Oletuskauppaa ei voitu ladata" retry_func={() => dispatch(getDefaultStore)} />
 }
 
 export default CurrentStore

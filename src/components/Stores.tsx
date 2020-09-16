@@ -29,7 +29,7 @@ const StoreContainer = () => {
         })
       }
     </Container>
-  ) : <ErrorComponent resource="Kauppoja" retry_func={() => dispatch(getAllStores)} />
+  ) : <ErrorComponent message="Kauppoja ei voitu ladata." retry_func={() => dispatch(getAllStores)} />
 }
 
 const Stores: React.FC<{ show: boolean; onHide: React.Dispatch<React.SetStateAction<void>> }> = (props) => {
