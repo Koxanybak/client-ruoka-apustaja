@@ -1,4 +1,4 @@
-import { ShoppingList, ShoppingListState, ShoppingListAction } from "./types";
+import { ShoppingListState, ShoppingListAction } from "./types";
 import { Dispatch } from "redux";
 import { get_shopping_lists } from "../../services/shoppinglists";
 

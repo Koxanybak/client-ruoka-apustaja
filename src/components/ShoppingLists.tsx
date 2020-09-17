@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { createUseStyles } from "react-jss"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
+import { initialize_shopping_lists } from "../store/shoppinglists/shoppinglistReducer"
 
 const useStyles = createUseStyles({
   hidden: {
@@ -12,6 +13,16 @@ const useStyles = createUseStyles({
 const ShoppingLists: React.FC<{ show: boolean }> = ({ show }) => {
   const classes = useStyles()
   const shopping_lists = useSelector((state: RootState) => state.shopping_lists.shopping_lists)
+  const user_id = useSelector((state: RootState) => state.system.logged_user?.id)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!user_id) {
+      // show some error here
+    } else {
+      dispatch(initialize_shopping_lists(user_id))
+    }
+  })
 
   return (
     <div className={show ? undefined : classes.hidden}>

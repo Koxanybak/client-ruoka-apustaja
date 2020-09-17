@@ -5,7 +5,7 @@ export interface ShoppingList {
   store_id: number;
   name: string;
   user_id: number;
-  productList: Omit<Product, "storeID">[];
+  productList: Omit<Product, "storeID">[] | null;
 }
 
 export interface ShoppingListState {

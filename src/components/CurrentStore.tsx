@@ -11,9 +11,10 @@ const CurrentStore = () => {
 
   // initializes the store
   useEffect(() => {
-    console.log("Switching to default store")
-    dispatch(getDefaultStore())
-  }, [dispatch])
+    if (!currentStore) {
+      dispatch(getDefaultStore())
+    }
+  }, [dispatch, currentStore])
 
   return !error ? (
     <h5>

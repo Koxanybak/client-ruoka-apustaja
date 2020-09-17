@@ -14,7 +14,6 @@ interface Feedback {
 }
 
 export interface SystemState {
-  currentStore: Store | null;
   logged_user: User | null;
   feedback: Feedback | null;
 }

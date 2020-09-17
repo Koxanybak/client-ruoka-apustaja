@@ -1,4 +1,5 @@
 import {
+  Store,
   StoreAction,
   StoreState,
 } from "./types"
@@ -49,13 +50,32 @@ export const getAllStores = () => {
   }
 }
 
+export const setCurrentStore = (store: Store) => {
+  window.sessionStorage.setItem("current_store", JSON.stringify(store))
+  return {
+    type: "SET_CURRENT_STORE",
+    payload: store,
+  }
+}
+
 export const getDefaultStore = () => {
   return async (dispatch: Dispatch<StoreAction>) => {
-    const store = await getStoreById(705)
-    dispatch({
-      type: "SET_CURRENT_STORE",
-      payload: store,
-    })
+    const string_store = window.sessionStorage.getItem("current_store")
+
+    // non-strict eq
+    if (string_store && string_store !== "undefined") {
+      const current_store: Store = JSON.parse(string_store)
+      dispatch({
+        type: "SET_CURRENT_STORE",
+        payload: current_store,
+      })
+    } else {
+      const store = await getStoreById(705)
+      dispatch({
+        type: "SET_CURRENT_STORE",
+        payload: store,
+      })
+    }
   }
 }
 

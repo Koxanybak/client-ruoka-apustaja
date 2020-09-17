@@ -11,7 +11,7 @@ interface UserBody {
 }
 
 export const login = (login_body: UserBody): Promise<User> => {
-  return axios.post(login_url, login_body).then(res => {
+  return axios.post(login_url, login_body, { withCredentials: true }).then(res => {
     return res.data
   })
 }

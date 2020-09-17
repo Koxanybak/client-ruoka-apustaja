@@ -1,17 +1,13 @@
 import { SystemState, SystemAction, User, FeedbackVariant } from "./types";
-import { Store } from "../stores/types";
 import { Dispatch } from "react";
 
 const initialSystemState: SystemState = {
-  currentStore: null,
   logged_user: null,
   feedback: null,
 }
 
 export const systemReducer = (state: SystemState = initialSystemState, action: SystemAction): SystemState => {
   switch (action.type) {
-    case "SET_CURRENT_STORE":
-      return { ...state, currentStore: action.payload }
     case "SET_LOGGED_USER":
       return { ...state, logged_user: action.payload }
     case "SET_FEEDBACK":
@@ -39,13 +35,6 @@ export const set_feedback = (message: string, variant: FeedbackVariant, time_sec
       type: "SET_FEEDBACK",
       payload: { message, variant, },
     })
-  }
-}
-
-export const setCurrentStore = (store: Store) => {
-  return {
-    type: "SET_CURRENT_STORE",
-    payload: store,
   }
 }
 

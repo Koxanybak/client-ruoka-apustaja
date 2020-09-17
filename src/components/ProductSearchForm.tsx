@@ -17,7 +17,7 @@ const ProductSearchForm = () => {
 
   // TODO: VALIDATE THE FORM, CURRENTSTORE CANNOT BE NULL
 
-  const currentStore = useSelector((state: RootState) => state.system.currentStore)
+  const currentStore = useSelector((state: RootState) => state.stores.currentStore)
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()

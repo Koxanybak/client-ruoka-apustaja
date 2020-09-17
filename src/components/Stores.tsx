@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { getAllStores } from "../store/stores/storeReducer"
 import { RootState } from "../store";
 import { Row, Container, Modal, Nav } from "react-bootstrap";
-import { setCurrentStore } from "../store/system/systemReducer";
+import { setCurrentStore } from "../store/stores/storeReducer";
 import ErrorComponent from "./ErrorComponent";
 
 const StoreContainer = () => {
