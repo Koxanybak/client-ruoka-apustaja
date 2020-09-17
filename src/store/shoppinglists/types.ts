@@ -8,8 +8,14 @@ export interface ShoppingList {
   productList: Omit<Product, "storeID">[] | null;
 }
 
+interface ShoppingListError {
+  message: string;
+  status: number;
+}
+
 export interface ShoppingListState {
   shopping_lists: ShoppingList[] | null;
+  error?: ShoppingListError
 }
 
 interface InitializeAction {
@@ -17,4 +23,9 @@ interface InitializeAction {
   payload: ShoppingList[];
 }
 
-export type ShoppingListAction = InitializeAction
+interface SetErrorAction {
+  type: "SET_ERROR";
+  payload: ShoppingListError | undefined;
+}
+
+export type ShoppingListAction = InitializeAction | SetErrorAction

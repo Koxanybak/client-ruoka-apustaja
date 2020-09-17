@@ -10,6 +10,8 @@ export const shoppinglistReducer = (state: ShoppingListState = initialState, act
   switch (action.type) {
     case "INITIALIZE":
       return { ...state, shopping_lists: action.payload }
+    case "SET_ERROR":
+      return { ...state, error: action.payload }
     default:
       return state
   }
@@ -17,10 +19,21 @@ export const shoppinglistReducer = (state: ShoppingListState = initialState, act
 
 export const initialize_shopping_lists = (user_id: number) => {
   return async (dispatch: Dispatch) => {
-    const shopping_lists = await get_shopping_lists(user_id)
-    dispatch({
-      type: "INITIALIZE",
-      payload: shopping_lists,
-    })
+    try {
+      dispatch({
+        type: "SET_ERROR",
+        payload: undefined,
+      })
+      const shopping_lists = await get_shopping_lists(user_id)
+      dispatch({
+        type: "INITIALIZE",
+        payload: shopping_lists,
+      })
+    } catch(e) {
+      dispatch({
+        type: "SET_ERROR",
+        payload: { message: e.response?.data?.error, status: e.response?.status },
+      })
+    }
   }
 }

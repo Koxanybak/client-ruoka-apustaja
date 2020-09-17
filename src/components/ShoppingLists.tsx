@@ -3,6 +3,7 @@ import { createUseStyles } from "react-jss"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
 import { initialize_shopping_lists } from "../store/shoppinglists/shoppinglistReducer"
+import ErrorComponent from "./ErrorComponent"
 
 const useStyles = createUseStyles({
   hidden: {
@@ -12,17 +13,32 @@ const useStyles = createUseStyles({
 
 const ShoppingLists: React.FC<{ show: boolean }> = ({ show }) => {
   const classes = useStyles()
-  const shopping_lists = useSelector((state: RootState) => state.shopping_lists.shopping_lists)
+  const { error, shopping_lists } = useSelector((state: RootState) => state.shopping_lists)
   const user_id = useSelector((state: RootState) => state.system.logged_user?.id)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (!user_id) {
-      // show some error here
-    } else {
+    if (user_id) {
       dispatch(initialize_shopping_lists(user_id))
     }
-  })
+  }, [dispatch, user_id])
+  
+  if (!user_id) {
+    return (
+      <ErrorComponent
+        message={"Sinun täytyy kirjautua sisään nähdäksesi ostoslistasi."}
+      />
+    )
+  }
+
+  if (error) {
+    return (
+      <ErrorComponent
+        {...error}
+        retry_func={() => dispatch(initialize_shopping_lists(user_id))}
+      />
+    )
+  }
 
   return (
     <div className={show ? undefined : classes.hidden}>
