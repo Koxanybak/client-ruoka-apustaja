@@ -62,19 +62,34 @@ export const getDefaultStore = () => {
   return async (dispatch: Dispatch<StoreAction>) => {
     const string_store = window.sessionStorage.getItem("current_store")
 
-    // non-strict eq
     if (string_store && string_store !== "undefined") {
       const current_store: Store = JSON.parse(string_store)
+      dispatch({
+        type: "SET_ERROR",
+        payload: { current: false }
+      })
       dispatch({
         type: "SET_CURRENT_STORE",
         payload: current_store,
       })
     } else {
-      const store = await getStoreById(705)
-      dispatch({
-        type: "SET_CURRENT_STORE",
-        payload: store,
-      })
+      try {
+        const store = await getStoreById(705)
+        dispatch({
+          type: "SET_ERROR",
+          payload: { current: false }
+        })
+        dispatch({
+          type: "SET_CURRENT_STORE",
+          payload: store,
+        })
+      }
+      catch (e) {
+        dispatch({
+          type: "SET_ERROR",
+          payload: { current: true }
+        })
+      }
     }
   }
 }
