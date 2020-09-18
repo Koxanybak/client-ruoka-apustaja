@@ -21,7 +21,7 @@ export const storeReducer = (state: StoreState = initialState, action: StoreActi
       return { ...state, all: action.payload }
     case "SET_CURRENT_STORE":
       return { ...state, currentStore: action.payload }
-    case "SET_ERROR":
+    case "SET_STORE_ERROR":
       return { ...state, errors: { ...state.errors, ...action.payload }}
     default:
       return state
@@ -37,13 +37,13 @@ export const getAllStores = () => {
         payload: stores,
       })
       dispatch({
-        type: "SET_ERROR",
+        type: "SET_STORE_ERROR",
         payload: { all: false }
       })
     }
     catch {
       dispatch({
-        type: "SET_ERROR",
+        type: "SET_STORE_ERROR",
         payload: { all: true }
       })
     }
@@ -65,7 +65,7 @@ export const getDefaultStore = () => {
     if (string_store && string_store !== "undefined") {
       const current_store: Store = JSON.parse(string_store)
       dispatch({
-        type: "SET_ERROR",
+        type: "SET_STORE_ERROR",
         payload: { current: false }
       })
       dispatch({
@@ -76,7 +76,7 @@ export const getDefaultStore = () => {
       try {
         const store = await getStoreById(705)
         dispatch({
-          type: "SET_ERROR",
+          type: "SET_STORE_ERROR",
           payload: { current: false }
         })
         dispatch({
@@ -86,7 +86,7 @@ export const getDefaultStore = () => {
       }
       catch (e) {
         dispatch({
-          type: "SET_ERROR",
+          type: "SET_STORE_ERROR",
           payload: { current: true }
         })
       }

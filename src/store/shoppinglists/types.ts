@@ -15,7 +15,7 @@ interface ShoppingListError {
 
 export interface ShoppingListState {
   shopping_lists: ShoppingList[] | null;
-  error?: ShoppingListError
+  shopping_list_error?: ShoppingListError
 }
 
 interface InitializeAction {

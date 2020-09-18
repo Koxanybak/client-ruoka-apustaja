@@ -16,8 +16,8 @@ interface SetCurrentStoreAction {
   payload: Store;
 }
 
-interface SetErrorAction {
-  type: "SET_ERROR",
+interface SetStoreErrorAction {
+  type: "SET_STORE_ERROR",
   payload: { [key in StoreErrors]?: boolean; }
 }
 
@@ -27,4 +27,4 @@ export interface StoreState {
   errors: { [key in StoreErrors]: boolean; };
 }
 
-export type StoreAction = GetAllStoresAction | SetCurrentStoreAction | SetErrorAction
+export type StoreAction = GetAllStoresAction | SetCurrentStoreAction | SetStoreErrorAction

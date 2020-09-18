@@ -50,10 +50,20 @@ export const get_logged_user = () => {
   return async (dispatch: Dispatch<SystemAction>) => {
     try {
       const logged_user = await get_user_from_cookie()
+      dispatch({
+        type: "SET_USER_ERROR",
+        payload: undefined,
+      })
       dispatch(set_logged_user(logged_user))
     }
     catch (e) {
-      
+      dispatch({
+        type: "SET_USER_ERROR",
+        payload: {
+          message: e.response?.data?.error,
+          status: e.response?.status,
+        },
+      })
     }
   }
 }
