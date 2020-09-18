@@ -15,7 +15,7 @@ const ProductSearchForm = () => {
   }])
   const history = useHistory()
 
-  // TODO: VALIDATE THE FORM, CURRENTSTORE CANNOT BE NULL
+  // TODO: VALIDATE THE FORM, CURRENTSTORE CANNOT BE NULL, AND NEITHER ANY OF THE DESCS EMPTY
 
   const currentStore = useSelector((state: RootState) => state.stores.currentStore)
 
