@@ -17,13 +17,17 @@ const Menu = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav>
           <Nav.Link href="/new">Hae ostoslistaa</Nav.Link>
-          <Nav.Link href="/shoppinglists">Ostoslistani</Nav.Link>
           <Button variant="primary" onClick={() => set_stores_show(true)}>
             Vaihda kauppaa
           </Button>
-          <Button variant="secondary" onClick={() => set_login_show(true)}>
-            Kirjaudu sisään
-          </Button>
+          {!logged_user
+            ?
+              <Button variant="secondary" onClick={() => set_login_show(true)}>
+                Kirjaudu sisään
+              </Button>
+            :
+              <Nav.Link href="/shoppinglists">Ostoslistani</Nav.Link>
+          }
         </Nav>
       </Navbar.Collapse>
       <Stores
