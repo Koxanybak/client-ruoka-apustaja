@@ -1,0 +1,8 @@
+version: "3"
+services: 
+    client:
+        build: .
+        ports:
+            - "3000:3000"
+        image: "koxanybak/ruoka-client"
+        container_name: ruoka-client
