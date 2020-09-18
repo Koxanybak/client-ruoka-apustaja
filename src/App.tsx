@@ -7,12 +7,19 @@ import SearchResults from "./components/SearchResults"
 import ProductSearchForm from "./components/ProductSearchForm"
 import RegisterForm from "./components/RegisterForm"
 import Notification from "./components/Notification"
+import { useUser } from "./hooks/use-user"
 
 const App = () => {
+  const { user_error, user_loading } = useUser()
+
+  if (user_loading && !user_error) {
+    return <h1>Ladataan...</h1>
+  }
+
   return (
     <div id="app">
-      <Menu />
       <Router>
+        <Menu />
         <Switch>
           <Route path="/search">
             <SearchResults />

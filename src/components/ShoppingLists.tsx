@@ -13,29 +13,31 @@ const useStyles = createUseStyles({
 
 const ShoppingLists: React.FC<{ show: boolean }> = ({ show }) => {
   const classes = useStyles()
-  const { error, shopping_lists } = useSelector((state: RootState) => state.shopping_lists)
-  const user_id = useSelector((state: RootState) => state.system.logged_user?.id)
+  const { shopping_lists } = useSelector((state: RootState) => state.shopping_lists)
+  const shopping_list_error = useSelector((state: RootState) => state.shopping_lists.shopping_list_error)
+  const user = useSelector((state: RootState) => state.system.logged_user)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (user_id) {
-      dispatch(initialize_shopping_lists(user_id))
+    if (user) {
+      dispatch(initialize_shopping_lists(user))
     }
-  }, [dispatch, user_id])
+  }, [dispatch, user])
   
-  if (!user_id) {
+  if (!user) {
     return (
       <ErrorComponent
         message={"Sinun täytyy kirjautua sisään nähdäksesi ostoslistasi."}
       />
     )
   }
-
-  if (error) {
+  if (shopping_list_error) {
+    console.log({...shopping_list_error})
     return (
       <ErrorComponent
-        {...error}
-        retry_func={() => dispatch(initialize_shopping_lists(user_id))}
+        message={shopping_list_error.message}
+        status={shopping_list_error.status}
+        retry_func={() => dispatch(initialize_shopping_lists(user))}
       />
     )
   }
