@@ -16,6 +16,10 @@ export const login = (login_body: UserBody): Promise<User> => {
   })
 }
 
+export const get_user_from_cookie = (): Promise<User> => {
+  return axios.get(login_url, { withCredentials: true }).then(res => res.data)
+}
+
 export const createUser = (user_body: UserBody): Promise<void> => {
   return axios.post(user_url, user_body)
 }

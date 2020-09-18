@@ -1,5 +1,6 @@
 import React, { useState, } from "react"
 import { Navbar, Nav, Button } from "react-bootstrap"
+import { useUser } from "../hooks/use-user"
 import CurrentStore from "./CurrentStore"
 import LoginForm from "./LoginForm"
 import Stores from "./Stores"
@@ -7,6 +8,7 @@ import Stores from "./Stores"
 const Menu = () => {
   const [stores_show, set_stores_show] = useState(false)
   const [login_show, set_login_show] = useState(false)
+  const logged_user = useUser()
 
   return (
     <Navbar bg="light" expand="lg">

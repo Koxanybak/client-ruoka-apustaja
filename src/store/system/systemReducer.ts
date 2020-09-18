@@ -1,5 +1,6 @@
 import { SystemState, SystemAction, User, FeedbackVariant } from "./types";
 import { Dispatch } from "react";
+import { get_user_from_cookie } from "../../services/users";
 
 const initialSystemState: SystemState = {
   logged_user: null,
@@ -38,9 +39,21 @@ export const set_feedback = (message: string, variant: FeedbackVariant, time_sec
   }
 }
 
-export const set_logged_user = (user: User) => {
+export const set_logged_user = (user: User): SystemAction => {
   return {
     type: "SET_LOGGED_USER",
     payload: user,
+  }
+}
+
+export const get_logged_user = () => {
+  return async (dispatch: Dispatch<SystemAction>) => {
+    try {
+      const logged_user = await get_user_from_cookie()
+      dispatch(set_logged_user(logged_user))
+    }
+    catch (e) {
+      
+    }
   }
 }
