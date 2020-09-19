@@ -1,16 +1,18 @@
 import { Product } from "../products/types";
 
+export type ShoppingListItem = Omit<Product, "storeID">
+
 export interface ShoppingList {
   id: number;
   store_id: number;
   name: string;
   user_id: number;
-  productList: Omit<Product, "storeID">[] | null;
+  productList: ShoppingListItem[] | null;
 }
 
-interface ShoppingListError {
-  message: string;
-  status: number;
+export interface ShoppingListError {
+  message?: string;
+  status?: number;
 }
 
 export interface ShoppingListState {
@@ -23,9 +25,50 @@ interface InitializeAction {
   payload: ShoppingList[];
 }
 
+interface CreateShoppingListAction {
+  type: "CREATE_SHOPPING_LIST";
+  payload: ShoppingList;
+}
+
+interface DeleteShoppingListAction {
+  type: "DELETE_SHOPPING_LIST";
+  payload: number; // shopping list id
+}
+
+interface InitializeShoppingListItemsAction {
+  type: "INITIALIZE_SHOPPING_LIST_ITEMS";
+  payload: {
+    id: number;
+    items: ShoppingListItem[];
+  };
+}
+
+interface AddItemAction {
+  type: "ADD_ITEM";
+  payload: {
+    item: ShoppingListItem;
+    shopping_list_id: number;
+  };
+}
+
+interface RemoveItemAction {
+  type: "REMOVE_ITEM";
+  payload: {
+    item_id: number;
+    shopping_list_id: number;
+  };
+}
+
 interface SetErrorAction {
-  type: "SET_ERROR";
+  type: "SET_SHOPPING_LIST_ERROR";
   payload: ShoppingListError | undefined;
 }
 
-export type ShoppingListAction = InitializeAction | SetErrorAction
+export type ShoppingListAction =
+  InitializeAction |
+  SetErrorAction |
+  CreateShoppingListAction |
+  DeleteShoppingListAction |
+  InitializeShoppingListItemsAction |
+  AddItemAction |
+  RemoveItemAction
