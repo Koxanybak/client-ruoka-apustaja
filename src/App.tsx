@@ -28,7 +28,7 @@ const App = () => {
             <ProductSearchForm />
           </Route>
           <Route path="/shoppinglists">
-            <ShoppingLists show />
+            <ShoppingLists />
           </Route>
           <Route path="/register">
             <RegisterForm />

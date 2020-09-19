@@ -8,12 +8,14 @@ import { getSearchResult } from "../store/products/productReducer"
 import { RootState } from "../store"
 import ShoppingLists from "./ShoppingLists"
 import ErrorComponent from "./ErrorComponent"
+import OwnButton from "./OwnButton"
 
 const useStyles = createUseStyles({
   searchResultList: {
     display: "flex",
     flexDirection: "column",
     overflowY: "scroll",
+    height: "100%",
   },
   searchResultItem: {
     padding: "0.5em",
@@ -32,6 +34,7 @@ const useStyles = createUseStyles({
     height: "20em",
     border: "1px solid orange",
     borderRadius: "5px",
+    position: "relative",
   },
   priceContainer: {
     display: "flex",
@@ -46,6 +49,21 @@ const useStyles = createUseStyles({
     flexDirection: "row",
     alignItems: "stretch",
   },
+  searchResultContainer: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  shopping_lists: {
+    width: "60%",
+  },
+  hidden: {
+    composes: "$shopping_lists",
+    display: "none",
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 0,
+  },
 })
 
 const SearchResult= () => {
@@ -53,6 +71,8 @@ const SearchResult= () => {
   const location = useLocation()
   const search_result = useSelector((state: RootState) => state.products.searchResult)
   const error = useSelector((state: RootState) => state.products.error)
+
+  // get the query object from the url
   const search_obj = useMemo(() => qs.parse(location.search, { ignoreQueryPrefix: true }) as any as SLSearch, [location.search])
   const dispatch = useDispatch()
 
@@ -60,8 +80,12 @@ const SearchResult= () => {
     dispatch(getSearchResult(search_obj))
   }, [dispatch, search_obj])
 
+  const handle_add_click = () => {
+
+  }
+
   return (
-    <div className="search-results">
+    <div className={classes.searchResultContainer}>
       {!error
         ?
           search_result ? <ul className={classes.searchResultList}>
@@ -80,6 +104,14 @@ const SearchResult= () => {
                         <div className="product-price">{product.price}</div>
                       </div>
                       <div className="product-name">{product.name}</div>
+                      <div className={classes.buttonContainer}>
+                        <OwnButton
+                          primary
+                          onClick={handle_add_click}
+                        >
+                          Ostoslistalle :D
+                        </OwnButton>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -93,7 +125,7 @@ const SearchResult= () => {
             retry_func={() => dispatch(getSearchResult(search_obj))}
           />
       }
-      <ShoppingLists show />
+      <ShoppingLists className={classes.shopping_lists} />
     </div>
   )
 }

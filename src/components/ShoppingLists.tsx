@@ -1,25 +1,18 @@
 import React, { useEffect } from "react"
-import { createUseStyles } from "react-jss"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
 import { initialize_shopping_lists } from "../store/shoppinglists/shoppinglistReducer"
 import ErrorComponent from "./ErrorComponent"
 
-const useStyles = createUseStyles({
-  hidden: {
-    display: "none",
-  },
-})
 
-const ShoppingLists: React.FC<{ show: boolean }> = ({ show }) => {
-  const classes = useStyles()
+const ShoppingLists: React.FC<{ className?: string }> = ({ className }) => {
   const { shopping_lists } = useSelector((state: RootState) => state.shopping_lists)
   const shopping_list_error = useSelector((state: RootState) => state.shopping_lists.shopping_list_error)
   const user = useSelector((state: RootState) => state.system.logged_user)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (user) {
+    if (user && !shopping_lists) {
       dispatch(initialize_shopping_lists(user))
     }
   }, [dispatch, user])
@@ -43,7 +36,7 @@ const ShoppingLists: React.FC<{ show: boolean }> = ({ show }) => {
   }
 
   return (
-    <div className={show ? undefined : classes.hidden}>
+    <div className={className}>
       {shopping_lists 
         ?
           <ul>
