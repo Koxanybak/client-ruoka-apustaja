@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { SLSearch } from "../store/products/types"
 import { createUseStyles } from "react-jss"
 import qs from "qs"
@@ -8,6 +8,9 @@ import { getSearchResult } from "../store/products/productReducer"
 import { RootState } from "../store"
 import ShoppingLists from "./ShoppingLists"
 import ErrorComponent from "./ErrorComponent"
+import SearchResultProduct from "./SearchResultProduct"
+import { useUser } from "../hooks/use-user"
+import { add_item, create_shopping_list } from "../store/shoppinglists/shoppinglistReducer"
 import OwnButton from "./OwnButton"
 
 const useStyles = createUseStyles({
@@ -23,22 +26,6 @@ const useStyles = createUseStyles({
     display: "flex",
     flexDirection: "column",
     flexWrap: "no-wrap",
-  },
-  searchResultProduct: {
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: "#d2fcfa",
-    margin: "0.5em",
-    padding: "0.5em",
-    width: "200px",
-    height: "20em",
-    border: "1px solid orange",
-    borderRadius: "5px",
-    position: "relative",
-  },
-  priceContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
   },
   searchDesc: {
     textAlign: "center"
@@ -60,28 +47,37 @@ const useStyles = createUseStyles({
     composes: "$shopping_lists",
     display: "none",
   },
-  buttonContainer: {
-    position: "absolute",
-    bottom: 0,
-  },
 })
 
 const SearchResult= () => {
   const classes = useStyles()
   const location = useLocation()
   const search_result = useSelector((state: RootState) => state.products.searchResult)
+  const current_store = useSelector((state: RootState) => state.stores.currentStore)
+  const current_sl_id = useSelector((state: RootState) => state.shopping_lists.current_sl_id)
   const error = useSelector((state: RootState) => state.products.error)
+  const { logged_user } = useUser()
 
   // get the query object from the url
-  const search_obj = useMemo(() => qs.parse(location.search, { ignoreQueryPrefix: true }) as any as SLSearch, [location.search])
+  const search_obj = useMemo(() => qs.parse(
+    location.search,
+    { ignoreQueryPrefix: true }) as any as SLSearch,
+    [location.search]
+  )
   const dispatch = useDispatch()
 
+  // get the query result from the server
   useEffect(() => {
     dispatch(getSearchResult(search_obj))
   }, [dispatch, search_obj])
 
-  const handle_add_click = () => {
-
+  const handle_add_click = async (item_id: number) => {
+    if (!logged_user || !current_store) return
+    if (!current_sl_id) {
+      dispatch(create_shopping_list(logged_user, current_store.id, { set_crnt: true, add_item: item_id }))
+    } else {
+      dispatch(add_item(logged_user, current_sl_id, item_id))
+    }
   }
 
   return (
@@ -96,23 +92,18 @@ const SearchResult= () => {
                 </h4>
                 <div className={classes.productContainer}>
                   {search_result[desc].map(product => (
-                    <div key={product.id} className={classes.searchResultProduct}>
-                      <div>
-                        <img src={product.imgSrc} alt="product" className="product-image" />
-                      </div>
-                      <div className={classes.priceContainer}>
-                        <div className="product-price">{product.price}</div>
-                      </div>
-                      <div className="product-name">{product.name}</div>
-                      <div className={classes.buttonContainer}>
-                        <OwnButton
-                          primary
-                          onClick={handle_add_click}
-                        >
-                          Ostoslistalle :D
-                        </OwnButton>
-                      </div>
-                    </div>
+                    <SearchResultProduct
+                      key={product.id}
+                      product={product}
+                    >
+                      <OwnButton
+                        primary
+                        onClick={() => handle_add_click(product.id)}
+                        disabled={!logged_user}
+                      >
+                        Ostoslistalle :D
+                      </OwnButton>
+                    </SearchResultProduct>
                   ))}
                 </div>
               </li>
@@ -125,7 +116,11 @@ const SearchResult= () => {
             retry_func={() => dispatch(getSearchResult(search_obj))}
           />
       }
-      <ShoppingLists className={classes.shopping_lists} />
+      <div>
+        <ShoppingLists
+          hide={!current_sl_id}
+        />
+      </div>
     </div>
   )
 }

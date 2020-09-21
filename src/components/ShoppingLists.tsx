@@ -1,22 +1,43 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useImperativeHandle, useMemo, useState } from "react"
+import { createUseStyles } from "react-jss"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
 import { initialize_shopping_lists } from "../store/shoppinglists/shoppinglistReducer"
 import ErrorComponent from "./ErrorComponent"
+import NewShoppingList from "./NewShoppingList"
+import ShoppingListDetails from "./ShoppingListDetails"
 
 
-const ShoppingLists: React.FC<{ className?: string }> = ({ className }) => {
+const useStyles = createUseStyles({
+  list_of_shopping_lists: {
+
+  },
+})
+
+const ShoppingLists: React.FC<{ hide?: boolean }> = ({ hide }) => {
   const { shopping_lists } = useSelector((state: RootState) => state.shopping_lists)
   const shopping_list_error = useSelector((state: RootState) => state.shopping_lists.shopping_list_error)
   const user = useSelector((state: RootState) => state.system.logged_user)
   const dispatch = useDispatch()
+  const classes = useStyles()
+  const current_sl_id = useSelector((state: RootState) => state.shopping_lists.current_sl_id)
 
+  const current_sl = useMemo(() => {
+    const sl = shopping_lists?.find(sl => sl.id === current_sl_id)
+    return sl
+  }, [current_sl_id, shopping_lists])
+
+  // get the shopping lists from the server
   useEffect(() => {
     if (user && !shopping_lists) {
       dispatch(initialize_shopping_lists(user))
     }
-  }, [dispatch, user])
+  }, [dispatch, user, shopping_lists])
   
+  // return null if hidden
+  if (hide) return null
+
+  // display errors if necessary
   if (!user) {
     return (
       <ErrorComponent
@@ -35,17 +56,28 @@ const ShoppingLists: React.FC<{ className?: string }> = ({ className }) => {
     )
   }
 
+  console.log("In ShoppingLists:", { current_sl_id, shopping_lists: shopping_lists?.map(sl => sl.productList), })
   return (
-    <div className={className}>
-      {shopping_lists 
+    <div>
+      <NewShoppingList user={user} />
+      {shopping_lists
         ?
-          <ul>
-            {shopping_lists.map(sl => (
-              <div key={sl.id}>
-                {sl.name}
-              </div>
-            ))}
-          </ul>
+          <div>
+            {current_sl
+              ?
+                <ShoppingListDetails
+                  shopping_list={current_sl}
+                />
+              :
+                <ul className={classes.list_of_shopping_lists}>
+                  {shopping_lists.map(sl => (
+                    <div key={sl.id}>
+                      {sl.name}
+                    </div>
+                  ))}
+                </ul>
+            }
+          </div>
         :
           <div>
             Ladataan...

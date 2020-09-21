@@ -28,7 +28,7 @@ export interface Product {
   pricePerUnit: number | null;
   unit: string | null;
   imgSrc: string;
-  storeID: number;
+  storeID?: number;
   link: string;
 }
 

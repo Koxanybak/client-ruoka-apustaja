@@ -17,7 +17,8 @@ export interface ShoppingListError {
 
 export interface ShoppingListState {
   shopping_lists: ShoppingList[] | null;
-  shopping_list_error?: ShoppingListError
+  shopping_list_error?: ShoppingListError;
+  current_sl_id: number | null;
 }
 
 interface InitializeAction {
@@ -59,6 +60,11 @@ interface RemoveItemAction {
   };
 }
 
+interface SetCurrentSl {
+  type: "SET_CURRENT_SL",
+  payload: number | null,
+}
+
 interface SetErrorAction {
   type: "SET_SHOPPING_LIST_ERROR";
   payload: ShoppingListError | undefined;
@@ -71,4 +77,5 @@ export type ShoppingListAction =
   DeleteShoppingListAction |
   InitializeShoppingListItemsAction |
   AddItemAction |
-  RemoveItemAction
+  RemoveItemAction |
+  SetCurrentSl
