@@ -45,7 +45,6 @@ export const shoppinglistReducer = (state: ShoppingListState = initialState, act
       }
     case "ADD_ITEM": {
       if (!state.shopping_lists) return state
-      console.log("In sl reducer:", {payload: action.payload})
       return {
         ...state,
         shopping_lists: state.shopping_lists.map(sl => (
@@ -168,7 +167,10 @@ export const initialize_shopping_list_items = (user: User, shopping_list_id: num
       const shopping_list_items = await get_shopping_list_items_of_user(user, shopping_list_id)
       dispatch({
         type: "INITIALIZE_SHOPPING_LIST_ITEMS",
-        payload: shopping_list_items,
+        payload: {
+          items: shopping_list_items,
+          id: shopping_list_id,
+        },
       })
     }, dispatch)
   }

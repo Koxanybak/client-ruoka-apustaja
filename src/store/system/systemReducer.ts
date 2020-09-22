@@ -15,6 +15,8 @@ export const systemReducer = (state: SystemState = initialSystemState, action: S
       return { ...state, feedback: action.payload }
     case "CLEAR_FEEDBACK":
       return { ...state, feedback: null }
+    case "SET_USER_ERROR":
+      return { ...state, user_error: action.payload }
     default:
       return state
   }

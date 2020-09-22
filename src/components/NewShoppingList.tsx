@@ -42,13 +42,14 @@ const NewShoppingList: React.FC<Props> = ({ user }) => {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <OwnButton type="submit">Luo</OwnButton>
+                <OwnButton primary type="submit">Luo</OwnButton>
               </FForm>
             )}
           </Formik>
         :
           <OwnButton
             onClick={() => set_show_form(true)}
+            primary
           >
             Uusi ostoslista
           </OwnButton>

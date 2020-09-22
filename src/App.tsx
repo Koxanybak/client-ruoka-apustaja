@@ -10,7 +10,7 @@ import Notification from "./components/Notification"
 import { useUser } from "./hooks/use-user"
 
 const App = () => {
-  const { user_error, user_loading } = useUser()
+  const { user_error, user_loading } = useUser({ fetch_from_server: true })
 
   if (user_loading && !user_error) {
     return <h1>Ladataan...</h1>

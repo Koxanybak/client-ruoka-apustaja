@@ -9,7 +9,7 @@ export interface User {
 
 export type FeedbackVariant = "warning" | "danger" | "success"
 interface Feedback {
-  message: string;
+  message?: string;
   variant: FeedbackVariant;
 }
 

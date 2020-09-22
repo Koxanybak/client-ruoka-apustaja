@@ -1,7 +1,6 @@
 import React from "react"
 import { createUseStyles } from "react-jss"
 import { Product } from "../store/products/types"
-import OwnButton from "./OwnButton"
 
 const useStyles = createUseStyles({
   searchResultProduct: {

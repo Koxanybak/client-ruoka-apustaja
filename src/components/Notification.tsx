@@ -21,7 +21,7 @@ const Notification = () => {
 
   return (
     <Alert show={true} variant={feedback.variant} className={classes.notification}>
-      <p>{feedback.message}</p>
+      <p>{feedback.message ? feedback.message : "Jotain meni vikaan :("}</p>
     </Alert>
   )
 }

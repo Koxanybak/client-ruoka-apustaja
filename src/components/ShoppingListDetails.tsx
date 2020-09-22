@@ -30,20 +30,23 @@ const ShoppingListDetails: React.FC<Props> = ({ shopping_list: { name, productLi
     }
   }, [productList, logged_user, dispatch, id])
 
-  console.log("In ShoppingListDetails:", {productList})
-
   return (
     <div>
-      <div>
+      <h2>
         {name}
-      </div>
+      </h2>
       <div className={classes.productContainer}>
-        {productList?.map(p => (
-          <SearchResultProduct
-            product={p}
-            key={p.id}
-          />
-        ))}
+        {!productList || productList.length === 0
+          ?
+            "Tällä ostoslistalla ei ole tuotteita."
+          :
+            productList.map(p => (
+              <SearchResultProduct
+                product={p}
+                key={p.id}
+              />
+            ))
+        }
       </div>
     </div>
   )

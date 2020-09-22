@@ -18,7 +18,7 @@ const LoginForm: React.FC<{ show: boolean, onHide: React.Dispatch<React.SetState
     login(values)
       .then(data => {
         dispatch(set_logged_user(data))
-        set_feedback("Kirjautuminen onnistui.", "success")
+        dispatch(set_feedback("Kirjautuminen onnistui.", "success"))
         onHide()
       })
       .catch(err => {

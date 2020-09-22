@@ -1,8 +1,9 @@
-import React, { useEffect, useImperativeHandle, useMemo, useState } from "react"
+import React, { useEffect, useMemo } from "react"
+import { Card } from "react-bootstrap"
 import { createUseStyles } from "react-jss"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
-import { initialize_shopping_lists } from "../store/shoppinglists/shoppinglistReducer"
+import { initialize_shopping_lists, set_current_sl } from "../store/shoppinglists/shoppinglistReducer"
 import ErrorComponent from "./ErrorComponent"
 import NewShoppingList from "./NewShoppingList"
 import ShoppingListDetails from "./ShoppingListDetails"
@@ -12,6 +13,9 @@ const useStyles = createUseStyles({
   list_of_shopping_lists: {
 
   },
+  shopping_list: {
+
+  }
 })
 
 const ShoppingLists: React.FC<{ hide?: boolean }> = ({ hide }) => {
@@ -56,10 +60,8 @@ const ShoppingLists: React.FC<{ hide?: boolean }> = ({ hide }) => {
     )
   }
 
-  console.log("In ShoppingLists:", { current_sl_id, shopping_lists: shopping_lists?.map(sl => sl.productList), })
   return (
     <div>
-      <NewShoppingList user={user} />
       {shopping_lists
         ?
           <div>
@@ -69,13 +71,18 @@ const ShoppingLists: React.FC<{ hide?: boolean }> = ({ hide }) => {
                   shopping_list={current_sl}
                 />
               :
-                <ul className={classes.list_of_shopping_lists}>
-                  {shopping_lists.map(sl => (
-                    <div key={sl.id}>
-                      {sl.name}
-                    </div>
-                  ))}
-                </ul>
+                <div>
+                <NewShoppingList user={user} />
+                  <ul className={classes.list_of_shopping_lists}>
+                    {shopping_lists.map(sl => (
+                      <Card key={sl.id}>
+                        <Card.Title onClick={() => dispatch(set_current_sl(sl.id))}>
+                          {sl.name}
+                        </Card.Title>
+                      </Card>
+                    ))}
+                  </ul>
+                </div>
             }
           </div>
         :

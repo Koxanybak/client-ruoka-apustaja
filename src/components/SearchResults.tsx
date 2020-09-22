@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo } from "react"
 import { SLSearch } from "../store/products/types"
 import { createUseStyles } from "react-jss"
 import qs from "qs"
