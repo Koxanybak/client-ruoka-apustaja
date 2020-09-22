@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios"
 import { ShoppingList, ShoppingListItem } from "../store/shoppinglists/types"
 import { User } from "../store/system/types"
+import { API_HOSTNAME } from "./config"
 
 const get_config = (user: User): AxiosRequestConfig => ({
   withCredentials: true,
@@ -9,7 +10,7 @@ const get_config = (user: User): AxiosRequestConfig => ({
   }
 })
 
-const get_base_url = (user: User): string => `http://localhost:3001/api/users/${user.id}/shoppinglists`
+const get_base_url = (user: User): string => `http://${API_HOSTNAME}:3001/api/users/${user.id}/shoppinglists`
 
 export const get_shopping_lists_of_user = async (user: User): Promise<ShoppingList[]> => {
   return (await axios.get(

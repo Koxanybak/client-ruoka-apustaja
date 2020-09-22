@@ -1,9 +1,10 @@
 import axios from "axios"
 import { User } from "../store/system/types"
+import { API_HOSTNAME } from "./config"
 
-const login_url = "http://localhost:3001/api/login"
+const login_url = `http://${API_HOSTNAME}:3001/api/login`
 
-const user_url = "http://localhost:3001/api/users"
+const user_url = `http://${API_HOSTNAME}:3001/api/users`
 
 interface UserBody {
   username: string;

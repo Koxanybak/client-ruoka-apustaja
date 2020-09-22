@@ -1,0 +1,1 @@
+export const API_HOSTNAME = process.env.NODE_ENV === "production" ? "api" : "localhost"
